@@ -1,23 +1,24 @@
-;;; doctest --- Elisp doctest -*- lexical-binding: t -*-
+;;; doctest.el --- Doctests for Emacs Lisp -*- lexical-binding: t -*-
 
 ;; Authors: Chris Rayner (dchrisrayner@gmail.com)
 ;; Created: Apr 8 2020
 ;; Keywords: lisp maint docs help
 ;; URL: https://github.com/riscy/doctest
 ;; SPDX-License-Identifier: GPL-3.0-or-later
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "24.3"))
 ;; Version: 0.0.0
 
 ;;; Commentary:
 
-;; A "doctest" is a test written inside a docstring that looks like:
+;; These are like a Python "doctest", but for Emacs Lisp and with an Emacs
+;; twist. A doctest is a test written inside a docstring that looks like:
 ;; >> (+ 1 1)
 ;; => 2
 ;;
-;; Why?
-;; - A clean option to write and test elisp without heavy dependencies
-;; - It encourages writing pure or at least side-effect-free functions
-;; - Your unit tests turn into documentation that your users can read
+;; There are benefits:
+;; - It's a clean way to test elisp code without any heavy dependencies
+;; - It encourages functions that are pure or at least side-effect-free
+;; - Your unit tests turn into documentation that your users can read!
 ;;
 ;; Type M-x doctest RET to run doctests on an entire buffer.
 ;; Type M-x doctest-here RET to run the doctest on the current line.
@@ -94,7 +95,9 @@ Call `doctest--append' to append to the running test output."
         doctest-first-failure nil))
 
 (defun doctest--next-test ()
-  "Return the point where the next test begins -- else nil."
+  "Return the point where the next test begins -- else nil.
+>> (eq (doctest--next-test) (point))
+=> t"
   (declare (side-effect-free t))
   (let (doctest-point)
     (save-excursion
@@ -125,7 +128,7 @@ Point must be inside a string, or else we return nil."
 
 (defun doctest-unescape (str)
   "Remove all backslashes from STR.
-It's an open work to parse/handle backslashes cleanly, so ignore them.
+It's open work to parse/handle backslashes cleanly, so ignore them.
 >> (doctest-unescape \"back\\\\slash\")
 => \"backslash\""
   (declare (side-effect-free t) (pure t))

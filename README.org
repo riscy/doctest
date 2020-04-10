@@ -1,0 +1,24 @@
+#+TITLE: Doctest for Emacs
+#+OPTIONS: toc:3 author:t creator:nil num:nil
+#+AUTHOR: Chris Rayner
+#+EMAIL: dchrisrayner@gmail.com
+
+* Description
+  These are like a [[https://docs.python.org/3/library/doctest.html][Python "doctest"]], but for Emacs Lisp and with an Emacs
+  twist. A doctest is a test written inside a docstring that looks like:
+
+  #+begin_src elisp
+  "Return sum of any number of arguments, which are numbers or markers.
+  >> (+ 1 1)
+  => 2"
+  #+end_src
+
+  There are benefits:
+  - It's a clean way to test elisp code without any heavy dependencies
+  - It encourages functions that are pure or at least side-effect-free
+  - Your unit tests turn into documentation that your users can read!
+
+* Usage
+  - Type M-x doctest RET to run doctests on an entire buffer.
+  - Type M-x doctest-here RET to run the doctest on the current line.
+  - Type M-x customize-group RET doctest RET to see customizables.
