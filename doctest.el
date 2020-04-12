@@ -26,8 +26,9 @@
 ;; - It encourages functions that are pure or at least side-effect-free
 ;; - Your unit tests turn into documentation that your users can read!
 ;;
-;; Type M-x doctest RET to run doctests on an entire buffer.
-;; Type M-x doctest-here RET to run the doctest on the current line.
+;; Use ~M-x doctest~ to run doctests on an entire buffer.
+;; Use ~M-x doctest-here~ to run the doctest on the current line.
+;; Use ~M-x doctest-defun~ to run the current defun's doctests.
 
 ;;; Code:
 

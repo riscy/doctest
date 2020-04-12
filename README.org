@@ -8,9 +8,15 @@
   twist. A doctest is a test written inside a docstring that looks like:
 
   #+begin_src elisp
-  "Return sum of any number of arguments, which are numbers or markers.
-  >> (+ 1 1)
-  => 2"
+(defun plus (arg1 arg2)
+  "Return sum of ARG1 and ARG2.
+>> (plus 1 1)
+=> 2
+>> (plus (plus 5 3) 2)  ; with nesting
+=> 10
+>> (format \"%s\" (plus 1 2))
+=> \"3\""
+  (+ arg1 arg2))
   #+end_src
 
   There are benefits:
@@ -19,8 +25,9 @@
   - Your unit tests turn into documentation that your users can read!
 
 * Usage
-  - Type M-x doctest RET to run doctests on an entire buffer.
-  - Type M-x doctest-here RET to run the doctest on the current line.
+  - Use ~M-x doctest~ to run doctests on an entire buffer.
+  - Use ~M-x doctest-here~ to run the doctest on the current line.
+  - Use ~M-x doctest-defun~ to run the current defun's doctests.
 * Related
   - [[https://docs.python.org/3/library/doctest.html][Python doctest]], the original
   - [[https://elixir-lang.org/getting-started/mix-otp/docs-tests-and-with.html][Elixir]] supports doctests
