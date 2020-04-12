@@ -64,15 +64,6 @@ This function sends its report using `send-string-to-terminal' if
              (doctest--message (format "%s\n%s" tally doctest--text)))
             (t (doctest--message tally))))))
 
-(defun doctest--message (str)
-  "Display STR or send string to terminal if `noninteractive'.
-`message' expects format strings and has to be accommodated;
-`send-string-to-terminal' has a newline added to the end."
-  (if (not noninteractive)
-      (message "%s" str)
-    (send-string-to-terminal (concat str "\n"))
-    str))
-
 (defun doctest-here (&optional interactively)
   "Run the test that the point is currently on.
 If called INTERACTIVELY, let the user know the test passed and
@@ -91,6 +82,22 @@ normalized into its `princ' form without being evaluated."
           (doctest--here-interactively input evaluated-input output)
         (doctest--here-noninteractively input evaluated-input output))))
    (t (message "No doctest here."))))
+
+(defun doctest-defun ()
+  "Run `doctest' on the current defun.
+This defun is the one that contains point or follows point,
+determined by calling `narrow-to-defun'."
+  (interactive)
+  (narrow-to-defun) (doctest) (widen))
+
+(defun doctest--message (str)
+  "Display STR or send string to terminal if `noninteractive'.
+`message' expects format strings and has to be accommodated;
+`send-string-to-terminal' has a newline added to the end."
+  (if (not noninteractive)
+      (message "%s" str)
+    (send-string-to-terminal (concat str "\n"))
+    str))
 
 (defun doctest--target-output ()
   "Read and return the target output on the current line.
