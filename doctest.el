@@ -11,9 +11,13 @@
 ;;; Commentary:
 
 ;; These are like a Python "doctest", but for Emacs Lisp and with an Emacs
-;; twist. A doctest is a test written inside a docstring that looks like:
+;; twist. A doctest is a test written inside a docstring.  They look like:
 ;; >> (+ 1 1)
 ;; => 2
+;;
+;; Inline comments are fine, but quotation marks must be escaped:
+;; >> (concat nil \"Hello world\")  ; concat should ignore nils
+;; => \"Hello world\"               ; ...and return a string
 ;;
 ;; There are benefits:
 ;; - It's a clean way to test elisp code without any heavy dependencies
@@ -22,7 +26,6 @@
 ;;
 ;; Type M-x doctest RET to run doctests on an entire buffer.
 ;; Type M-x doctest-here RET to run the doctest on the current line.
-;; Type M-x customize-group RET doctest RET to see customizables.
 
 ;;; Code:
 

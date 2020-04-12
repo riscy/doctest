@@ -21,7 +21,6 @@
 * Usage
   - Type M-x doctest RET to run doctests on an entire buffer.
   - Type M-x doctest-here RET to run the doctest on the current line.
-  - Type M-x customize-group RET doctest RET to see customizables.
 * Related
   - [[https://docs.python.org/3/library/doctest.html][Python doctest]], the original
   - [[https://elixir-lang.org/getting-started/mix-otp/docs-tests-and-with.html][Elixir]] supports doctests
