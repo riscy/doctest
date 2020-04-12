@@ -58,12 +58,20 @@ This function sends its report using `send-string-to-terminal' if
       (goto-char (point-min))
       (while (ignore-errors (goto-char (doctest--next-test)))
         (doctest-here)))
-    (let ((tally (format "%s passed, %s failed" doctest--pass doctest--fail))
-          (messager (if noninteractive #'send-string-to-terminal #'message)))
+    (let ((tally (format "%s passed, %s failed" doctest--pass doctest--fail)))
       (cond (doctest--first-failure
              (goto-char doctest--first-failure)
-             (funcall messager "%s\n%s" tally doctest--text))
-            (t (funcall messager tally))))))
+             (doctest--message (format "%s\n%s" tally doctest--text)))
+            (t (doctest--message tally))))))
+
+(defun doctest--message (str)
+  "Display STR or send string to terminal if `noninteractive'.
+`message' expects format strings and has to be accommodated;
+`send-string-to-terminal' has a newline added to the end."
+  (if (not noninteractive)
+      (message "%s" str)
+    (send-string-to-terminal (concat str "\n"))
+    str))
 
 (defun doctest-here (&optional interactively)
   "Run the test that the point is currently on.
