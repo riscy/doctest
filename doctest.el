@@ -12,14 +12,16 @@
 
 ;; These are like a Python "doctest", but for Emacs Lisp and with an Emacs
 ;; twist. A doctest is a test written inside a docstring.  They look like:
+;;
 ;; >> (+ 1 1)
 ;; => 2
 ;;
 ;; Inline comments are fine, but quotation marks must be escaped:
+;;
 ;; >> (concat nil \"Hello world\")  ; concat should ignore nils
 ;; => \"Hello world\"               ; ...and return a string
 ;;
-;; There are benefits:
+;; Some benefits:
 ;; - It's a clean way to test elisp code without any heavy dependencies
 ;; - It encourages functions that are pure or at least side-effect-free
 ;; - Your unit tests turn into documentation that your users can read!
@@ -42,9 +44,9 @@
 When run interactively, the point will move to the site of the
 first test failure (or the first syntax error in a test).
 
-Here's a living example:
->> (cons (list 6 'quoted :symbol 12345 \"Here's a string\") 8310247)
-=> ((6 quoted :symbol 12345 \"Here's a string\") . 8310247)"
+A living example:
+>> (cons (list 6 'quoted :symbol 12345 \"A string\") (+ 0 8310247))
+=> ((6 quoted :symbol 12345 \"A string\") . 8310247)
   (interactive)
   (doctest--reset-state)
   (let ((filename (or filename (buffer-file-name (current-buffer)))))
@@ -62,7 +64,10 @@ Here's a living example:
 (defun doctest-here (&optional interactively)
   "Run the test that the point is currently on.
 If called INTERACTIVELY, let the user know the test passed and
-move the point down two lines (possibly onto the next test)."
+move the point down two lines (possibly onto the next test).
+Internally, the doctest input line is evaluated with `eval' and
+normalized into its `princ' form, while the output line is
+normalized into its `princ' form without being evaluated."
   (interactive "p")
   (if (not (looking-at doctest-input))
       (message "No doctest here.")
