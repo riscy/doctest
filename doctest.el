@@ -89,7 +89,11 @@ normalized into its `princ' form without being evaluated."
 This defun is the one that contains point or follows point,
 determined by calling `narrow-to-defun'."
   (interactive)
-  (narrow-to-defun) (doctest) (widen))
+  (narrow-to-defun)
+  (eval-buffer)
+  (condition-case err
+      (progn (doctest) (widen))
+      (error (progn (widen) (signal (car err) (cdr err))))))
 
 (defun doctest--message (str)
   "Display STR or send string to terminal if `noninteractive'.
