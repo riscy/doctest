@@ -32,8 +32,14 @@
 
 ;;; Code:
 
-(defvar doctest-input "^>> \\(.*\\)" "The regexp for doctest input.")
-(defvar doctest-output "=> " "The regexp for doctest output.")
+(defvar doctest-input "^>> \\(.*\\)"
+  "The regexp for doctest input.
+>> (stringp doctest-input)
+=> t")
+(defvar doctest-output "=> "
+  "The regexp for doctest output.
+>> (string-suffix-p \" \" doctest-output)
+=> t")
 
 (defvar doctest--first-failure nil "Point of first failure, or nil.")
 (defvar doctest--text nil "Eventual report to show the user.")
