@@ -52,18 +52,17 @@ A living example:
 This function sends its report using `send-string-to-terminal' if
 `noninteractive' is non-nil, otherwise it simply uses `message'."
   (interactive)
+  (when filename (set-buffer (find-file filename)))
   (doctest--reset-state)
-  (let ((filename (or filename (buffer-file-name (current-buffer)))))
-    (set-buffer (find-file filename))
-    (save-excursion
-      (goto-char (point-min))
-      (while (ignore-errors (goto-char (doctest--next-test)))
-        (doctest-here)))
-    (let ((tally (format "%s passed, %s failed" doctest--pass doctest--fail)))
-      (cond (doctest--first-failure
-             (goto-char doctest--first-failure)
-             (doctest--message (format "%s\n%s" tally doctest--text)))
-            (t (doctest--message tally))))))
+  (save-excursion
+    (goto-char (point-min))
+    (while (ignore-errors (goto-char (doctest--next-test)))
+      (doctest-here)))
+  (let ((tally (format "%s passed, %s failed" doctest--pass doctest--fail)))
+    (cond (doctest--first-failure
+           (goto-char doctest--first-failure)
+           (doctest--message (format "%s\n%s" tally doctest--text)))
+          (t (doctest--message tally)))))
 
 (defun doctest-here (&optional interactively)
   "Run the test that the point is currently on.
@@ -101,8 +100,7 @@ determined by calling `narrow-to-defun'."
 `send-string-to-terminal' has a newline added to the end."
   (if (not noninteractive)
       (message "%s" str)
-    (send-string-to-terminal (concat str "\n"))
-    str))
+    (send-string-to-terminal (concat str "\n"))))
 
 (defun doctest--target-output ()
   "Read and return the target output on the current line.
