@@ -1,7 +1,9 @@
-#+TITLE: Doctest for Emacs
+#+TITLE: Doctest for Emacs (archive)
 #+OPTIONS: toc:3 author:t creator:nil num:nil
 #+AUTHOR: Chris Rayner
 #+EMAIL: dchrisrayner@gmail.com
+
+ This package has a new home: https://github.com/ag91/doctest
 
 * Description
   These are like a [[https://docs.python.org/3/library/doctest.html][Python "doctest"]], but for Emacs Lisp and with an Emacs
